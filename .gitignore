@@ -1,5 +1,7 @@
 /node_modules
 /test.ts
 /.env
-.idea
 /.idea
+.env
+package-lock.json
+/package-lock.json
