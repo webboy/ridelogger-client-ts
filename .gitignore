@@ -2,6 +2,4 @@
 /test.ts
 /.env
 /.idea
-.env
-package-lock.json
 /package-lock.json
