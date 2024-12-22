@@ -1,4 +1,4 @@
-import { RideLoggerClient } from "@/client";
+import { RideLoggerClient } from "../client";
 
 export class RLVehicleMake extends RideLoggerClient {
 

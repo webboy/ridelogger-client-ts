@@ -1,6 +1,4 @@
-import axios from 'axios';
-import { AxiosResponse } from 'axios/index';
-import AxiosXHRConfig = Axios.AxiosXHRConfig;
+import axios, { AxiosResponse, AxiosRequestHeaders, AxiosRequestConfig } from 'axios';
 import dotenv from 'dotenv'
 import { DEFAULT_CONFIG } from './config';
 import * as process from "node:process";
@@ -20,7 +18,7 @@ interface invalidResponse {
 }
 
 abstract class RideLoggerClient {
-    private axiosInstance: Axios.AxiosInstance;
+    private axiosInstance: ReturnType<typeof axios.create>;
     private clientName = 'RideLoggerClient';
     private version = '1.0.0';
 
@@ -39,17 +37,15 @@ abstract class RideLoggerClient {
             baseURL: baseURL,
             headers: {
                 'Content-Type': 'application/json',
-                'X-API-KEY': apiKey
-            },
+                'X-API-KEY': apiKey,
+            } as unknown as AxiosRequestHeaders,
         });
 
         // Bind the class methods to the instance
         this.handleResponse = this.handleResponse.bind(this);
         this.handleError = this.handleError.bind(this);
 
-
         this.axiosInstance.interceptors.response.use(
-            // @ts-ignore
             this.handleResponse,
             this.handleError
         );
@@ -77,7 +73,12 @@ abstract class RideLoggerClient {
         return Promise.reject(error);
     }
 
-    public async makeRequest(config: AxiosXHRConfig<any>): Promise<validResponse | invalidResponse> {
+    public async makeRequest(config: AxiosRequestConfig): Promise<validResponse | invalidResponse> {
+
+        if (!config.url) {
+            throw new Error("The 'url' property must be provided in the request configuration.");
+        }
+
         try {
             const response = await this.axiosInstance.request(config);
 
@@ -98,10 +99,8 @@ abstract class RideLoggerClient {
             }
         } catch (error: any) {
             // Handle failed request (e.g., network error or server issue)
-            this.consoleError("Request failed", error);
-
             return {
-                status: 'error',
+                status: 'axios_error',
                 response_time: 0, // Default to 0 if the request doesn't return a valid response_time
                 message: error.message ?? 'Request failed.',
                 errors: error.response?.data?.errors ?? [],

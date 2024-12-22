@@ -1,6 +1,6 @@
-import { RideLoggerClient } from "@/client";
+import { RideLoggerClient } from "../client";
 
-export class RLCountry extends RideLoggerClient {
+class RLCountry extends RideLoggerClient {
 
     public async getCountries(): Promise<any> {
         this.consoleLog("Fetching countries");
@@ -15,4 +15,8 @@ export class RLCountry extends RideLoggerClient {
             throw error;
         }
     }
+}
+
+export {
+    RLCountry
 }
