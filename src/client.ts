@@ -1,8 +1,6 @@
 import axios, { AxiosResponse, AxiosRequestHeaders, AxiosRequestConfig } from 'axios';
-import dotenv from 'dotenv'
 import { DEFAULT_CONFIG } from './config';
-import * as process from "node:process";
-dotenv.config();
+
 
 interface validResponse {
     status: string;
@@ -23,8 +21,8 @@ abstract class RideLoggerClient {
     private version = '1.0.0';
 
     constructor(
-        apiKey: string | undefined = process.env.API_KEY,
-        baseURL: string = process.env.RIDE_LOGGER_API_URL || DEFAULT_CONFIG.baseURL
+        apiKey: string,
+        baseURL: string = DEFAULT_CONFIG.baseURL
     ) {
         if (!apiKey) {
             throw new Error("API key is required.");

@@ -8,6 +8,7 @@
     "declaration": true,         // generate .d.ts files
     "sourceMap": true,            // generate .map files
     "importHelpers": true,        // use tslib to reduce bundle size
+    "declarationDir": "dist",     // output directory for .d.ts files
     "outDir": "dist",             // output directory
     "allowSyntheticDefaultImports": true,
   },
