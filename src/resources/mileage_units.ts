@@ -1,17 +1,17 @@
 import { RideLoggerClient } from "../client";
 
-export class RLCountry extends RideLoggerClient {
+export class RLMileageUnit extends RideLoggerClient {
 
     public async getList(): Promise<any> {
-        this.consoleLog("Fetching countries");
+        this.consoleLog("Fetching mileage units");
 
         try {
             return await this.makeRequest({
                 method: 'GET',
-                url: '/countries',
+                url: '/fuel_mileage_units',
             });
         } catch (error) {
-            this.consoleError("Error fetching countries", error);
+            this.consoleError("Error fetching mileage units", error);
             throw error;
         }
     }

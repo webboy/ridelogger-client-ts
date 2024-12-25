@@ -1,17 +1,17 @@
 import { RideLoggerClient } from "../client";
 
-export class RLCountry extends RideLoggerClient {
+export class RLVehicleType extends RideLoggerClient {
 
     public async getList(): Promise<any> {
-        this.consoleLog("Fetching countries");
+        this.consoleLog("Fetching vehicle types");
 
         try {
             return await this.makeRequest({
                 method: 'GET',
-                url: '/countries',
+                url: '/vehicle_types',
             });
         } catch (error) {
-            this.consoleError("Error fetching countries", error);
+            this.consoleError("Error fetching vehicle types", error);
             throw error;
         }
     }

@@ -2,7 +2,7 @@ import { RideLoggerClient } from "../client";
 
 export class RLVehicleModel extends RideLoggerClient {
 
-    public async getVehicleModels(vehicleMakeId?: number, vehicleTypeId?: number): Promise<any> {
+    public async getList(vehicleMakeId?: number, vehicleTypeId?: number): Promise<any> {
         this.consoleLog("Fetching vehicle models");
 
         try {
