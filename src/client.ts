@@ -22,6 +22,7 @@ abstract class RideLoggerClient {
 
     constructor(
         apiKey: string,
+        authenticationToken: string = '',
         baseURL: string = DEFAULT_CONFIG.baseURL
     ) {
         if (!apiKey) {
@@ -36,6 +37,7 @@ abstract class RideLoggerClient {
             headers: {
                 'Content-Type': 'application/json',
                 'X-API-KEY': apiKey,
+                'Authorization': `Bearer ${authenticationToken}`,
             } as unknown as AxiosRequestHeaders,
         });
 
@@ -109,6 +111,6 @@ abstract class RideLoggerClient {
 
 export {
     RideLoggerClient,
-    validResponse,
-    invalidResponse
+    type validResponse,
+    type invalidResponse
 }

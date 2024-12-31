@@ -1,6 +1,6 @@
 {
   "name": "ridelogger-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "description": "API client for Ridelogger's API",
   "main": "dist/index.cjs.js",

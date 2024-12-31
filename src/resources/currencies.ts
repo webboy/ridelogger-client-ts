@@ -2,7 +2,7 @@ import { RideLoggerClient } from "../client";
 
 export class RLCurrency extends RideLoggerClient {
 
-    public async getCurrencies(): Promise<any> {
+    public async getList(): Promise<any> {
         this.consoleLog("Fetching currencies");
 
         try {
