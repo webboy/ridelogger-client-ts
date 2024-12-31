@@ -19,4 +19,18 @@ export class RLAuth extends RideLoggerClient {
             throw error;
         }
     }
+
+    public async logout(): Promise<any> {
+        this.consoleLog("Logging out user");
+
+        try {
+            return await this.makeRequest({
+                method: 'GET',
+                url: '/auth/logout',
+            });
+        } catch (error) {
+            this.consoleError("Error logging out user", error);
+            throw error;
+        }
+    }
 }
