@@ -4,6 +4,7 @@ import { DEFAULT_CONFIG } from './config';
 
 interface validResponse {
     status: string;
+    message: string;
     response_time: number;
     data: any;
 }
