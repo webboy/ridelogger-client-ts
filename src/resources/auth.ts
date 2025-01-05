@@ -54,7 +54,7 @@ export class RLAuth extends RideLoggerClient {
         }
     }
 
-    public async requestEmailVerification(email: string) {
+    public async requestEmailVerification() {
         this.consoleLog("Requesting email verification");
         try {
             return await this.makeRequest({
