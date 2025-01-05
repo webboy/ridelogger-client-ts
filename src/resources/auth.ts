@@ -20,6 +20,26 @@ export class RLAuth extends RideLoggerClient {
         }
     }
 
+    public async register(email: string, password: string, password_confirmation: string, country_id: string): Promise<any> {
+        this.consoleLog("Registering user");
+
+        try {
+            return await this.makeRequest({
+                method: 'POST',
+                url: '/auth/signup',
+                data: {
+                    email,
+                    password,
+                    password_confirmation,
+                    country_id,
+                }
+            });
+        } catch (error) {
+            this.consoleError("Error registering user", error);
+            throw error;
+        }
+    }
+
     public async logout(): Promise<any> {
         this.consoleLog("Logging out user");
 
@@ -30,6 +50,36 @@ export class RLAuth extends RideLoggerClient {
             });
         } catch (error) {
             this.consoleError("Error logging out user", error);
+            throw error;
+        }
+    }
+
+    public async requestEmailVerification(email: string) {
+        this.consoleLog("Requesting email verification");
+        try {
+            return await this.makeRequest({
+                method: 'POST',
+                url: '/auth/email_verification_send',
+            });
+        } catch (error) {
+            this.consoleError("Error requesting email verification", error);
+            throw error;
+        }
+    }
+
+    public async verifyEmail(email: string, email_verification_code: string){
+        this.consoleLog("Verifying email");
+        try {
+            return await this.makeRequest({
+                method: 'POST',
+                url: '/auth/email_verification',
+                data:{
+                    email,
+                    email_verification_code
+                }
+            });
+        } catch (error) {
+            this.consoleError("Error verifying email", error);
             throw error;
         }
     }

@@ -11,7 +11,7 @@ interface validResponse {
 interface invalidResponse {
     status: string;
     message: string;
-    errors: [],
+    errors: Record<string, string[]>,
     response_time: number;
 }
 
@@ -60,10 +60,6 @@ abstract class RideLoggerClient {
     }
 
     private handleResponse(response: AxiosResponse<any>): AxiosResponse<any> {
-        if (response.status >= 400) {
-            this.consoleError(`${response.status} - ${response.statusText}`);
-            // Handle specific error cases based on status code
-        }
         return response;
     }
 
@@ -82,27 +78,19 @@ abstract class RideLoggerClient {
         try {
             const response = await this.axiosInstance.request(config);
 
-            // Parse the response based on the "status" field
-            if (response.data?.status === 'success') {
-                return {
-                    status: 'success',
-                    response_time: response.data.response_time,
-                    data: response.data.data ?? '',
-                } as validResponse;
-            } else {
-                return {
-                    status: 'error',
-                    response_time: response.data?.response_time ?? 0,
-                    message: response.data?.message ?? 'Unknown error occurred.',
-                    errors: response.data?.errors ?? [],
-                } as invalidResponse;
-            }
+            return {
+                status: response.data.status,
+                response_time: response.data?.response_time ?? 0,
+                data: response.data.data,
+                message: response.data?.message ?? '',
+            } as validResponse
+
         } catch (error: any) {
             // Handle failed request (e.g., network error or server issue)
             return {
-                status: 'axios_error',
-                response_time: 0, // Default to 0 if the request doesn't return a valid response_time
-                message: error.message ?? 'Request failed.',
+                status: error.response.data.status ?? 'axios-error',
+                response_time: error.response.data?.response_time ?? 0,
+                message: error.response.data.message ?? 'Request failed.',
                 errors: error.response?.data?.errors ?? [],
             } as invalidResponse;
         }
