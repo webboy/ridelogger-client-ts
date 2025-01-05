@@ -5,7 +5,7 @@ import { DEFAULT_CONFIG } from './config';
 interface validResponse {
     status: string;
     response_time: number;
-    data: string;
+    data: any;
 }
 
 interface invalidResponse {
@@ -13,6 +13,7 @@ interface invalidResponse {
     message: string;
     errors: Record<string, string[]>,
     response_time: number;
+    data: any;
 }
 
 abstract class RideLoggerClient {
