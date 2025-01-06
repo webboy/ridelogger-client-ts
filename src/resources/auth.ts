@@ -83,4 +83,39 @@ export class RLAuth extends RideLoggerClient {
             throw error;
         }
     }
+
+    public async requestPasswordRecovery(email: string){
+        this.consoleLog("Requesting password recovery");
+        try {
+            return await this.makeRequest({
+                method: 'POST',
+                url: '/auth/password_change_request',
+                data:{
+                    email
+                }
+            });
+        } catch (error) {
+            this.consoleError("Error requesting password recovery", error);
+            throw error;
+        }
+    }
+
+    public async changePassword(email: string, password: string, password_confirmation: string, password_recovery_code: string){
+        this.consoleLog("Changing password");
+        try {
+            return await this.makeRequest({
+                method: 'POST',
+                url: '/auth/password_change',
+                data:{
+                    email,
+                    password,
+                    password_confirmation,
+                    password_recovery_code
+                }
+            });
+        } catch (error) {
+            this.consoleError("Error changing password", error);
+            throw error;
+        }
+    }
 }
