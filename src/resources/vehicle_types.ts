@@ -8,7 +8,7 @@ export class RLVehicleType extends RideLoggerClient {
         try {
             return await this.makeRequest({
                 method: 'GET',
-                url: '/vehicle_types',
+                url: '/static_data/vehicle_types',
             });
         } catch (error) {
             this.consoleError("Error fetching vehicle types", error);

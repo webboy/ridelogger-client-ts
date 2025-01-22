@@ -8,7 +8,7 @@ export class RLFuelType extends RideLoggerClient {
         try {
             return await this.makeRequest({
                 method: 'GET',
-                url: '/fuel_types',
+                url: '/static_data/fuel_types',
             });
         } catch (error) {
             this.consoleError("Error fetching fuel types", error);

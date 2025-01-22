@@ -100,7 +100,7 @@ export class RLAuth extends RideLoggerClient {
         }
     }
 
-    public async changePassword(email: string, password: string, password_confirmation: string, password_recovery_code: string){
+    public async changePassword(email: string, password: string, password_confirmation: string, password_reset_code: string){
         this.consoleLog("Changing password");
         try {
             return await this.makeRequest({
@@ -110,7 +110,7 @@ export class RLAuth extends RideLoggerClient {
                     email,
                     password,
                     password_confirmation,
-                    password_recovery_code
+                    password_reset_code
                 }
             });
         } catch (error) {
