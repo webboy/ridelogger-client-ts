@@ -42,15 +42,6 @@ abstract class RideLoggerClient {
                 'Authorization': `Bearer ${authenticationToken}`,
             } as unknown as AxiosRequestHeaders,
         });
-
-        // Bind the class methods to the instance
-        this.handleResponse = this.handleResponse.bind(this);
-        this.handleError = this.handleError.bind(this);
-
-        this.axiosInstance.interceptors.response.use(
-            this.handleResponse,
-            this.handleError
-        );
     }
 
     public consoleLog(message: string) {
@@ -59,16 +50,6 @@ abstract class RideLoggerClient {
 
     public consoleError(message: string, context?: any) {
         console.error(`${this.clientName}(${this.version}): ${message}`, context);
-    }
-
-    private handleResponse(response: AxiosResponse<any>): AxiosResponse<any> {
-        return response;
-    }
-
-    private handleError(error: Error): Promise<never> {
-        this.consoleError("API Error:", error);
-        // Rethrow or log the error based on severity
-        return Promise.reject(error);
     }
 
     public async makeRequest(config: AxiosRequestConfig): Promise<validResponse | invalidResponse> {
@@ -90,9 +71,9 @@ abstract class RideLoggerClient {
         } catch (error: any) {
             // Handle failed request (e.g., network error or server issue)
             return {
-                status: error.response.data.status ?? 'axios-error',
-                response_time: error.response.data?.response_time ?? 0,
-                message: error.response.data.message ?? 'Request failed.',
+                status: error.response?.data?.status ?? 'axios-error',
+                response_time: error.response?.data?.response_time ?? 0,
+                message: error.response?.data?.message ?? 'Request failed.',
                 errors: error.response?.data?.errors ?? [],
             } as invalidResponse;
         }
